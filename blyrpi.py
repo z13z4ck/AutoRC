@@ -30,6 +30,8 @@ import BlynkLib
 
 class rpi():
 
+    BLYNK_AUTH = '60c5c89c4cb243428d02140bdaf4f896'
+    blynk = BlynkLib.Blynk(BLYNK_AUTH)
 
 
     def __init__(self):
@@ -56,8 +58,5 @@ class rpi():
 
 
 if __name__ == "__main__":
-    BLYNK_AUTH = '60c5c89c4cb243428d02140bdaf4f896'
-    blynk = BlynkLib.Blynk(BLYNK_AUTH)
-
-    rasp = rpi()
-    rasp.run(blynk)
+    
+    rpi()
