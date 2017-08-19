@@ -24,8 +24,9 @@ class SuironIO:
         self.depth = int(depth)
 
         # Video IO 
-        self.cap =  cv2.VideoCapture(0) # Use first capture device
+        self.cap = cv2.VideoCapture(0)  # Use first capture device
 
+        # TODO use direct input method
         # Serial IO
         self.ser = None
         if os.path.exists(serial_location):
