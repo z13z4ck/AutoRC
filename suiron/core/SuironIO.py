@@ -55,19 +55,31 @@ class SuironIO:
         # Frame is just a numpy array
         frame = self.get_frame()
 
+        # TODO use direct input from blynk app
         # Serial inputs is a dict with key 'servo', and 'motor'
-        serial_inputs = self.get_serial()
+        # serial_inputs = self.get_serial()
+
+        import blyrpi
+        rpi = blyrpi.Rpi()
+        if rpi.collectmode:
+            steer = rpi.pin1
+            throttle = rpi.pin2
+
+            # interfacing with blynk
+            self.frame_results.append(serialize_image(frame))
+            self.servo_results.append(steer)
+            self.motorspeed_results.append(throttle)
 
         # If its not in manual mode then proceed
-        if serial_inputs:
-            servo = serial_inputs['servo'] 
-            motor = serial_inputs['motor'] 
-
-            # Append to memory
-            # tolist so it actually appends the entire thing
-            self.frame_results.append(serialize_image(frame))
-            self.servo_results.append(servo)
-            self.motorspeed_results.append(motor)
+        # if serial_inputs:
+        #     servo = serial_inputs['servo']
+        #     motor = serial_inputs['motor']
+        #
+        #     # Append to memory
+        #     # tolist so it actually appends the entire thing
+        #     self.frame_results.append(serialize_image(frame))
+        #     self.servo_results.append(servo)
+        #     self.motorspeed_results.append(motor)
 
     # Get motor inputs, steering inputs etc
     def get_serial(self):
