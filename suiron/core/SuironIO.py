@@ -26,7 +26,6 @@ class SuironIO:
         # Video IO 
         self.cap = cv2.VideoCapture(0)  # Use first capture device
 
-        # TODO use direct input method
         # Serial IO
         self.ser = None
         if os.path.exists(serial_location):
@@ -47,7 +46,7 @@ class SuironIO:
 
         # Filename to save serial data and image data
         # Output file
-        outfile = open(fileoutname, 'w') # Truncate file first
+        outfile = open(fileoutname, 'w')    # Truncate file first
         self.outfile = open(fileoutname, 'a')
 
     # Saves both inputs
@@ -55,20 +54,21 @@ class SuironIO:
         # Frame is just a numpy array
         frame = self.get_frame()
 
-        # TODO use direct input from blynk app
         # Serial inputs is a dict with key 'servo', and 'motor'
         # serial_inputs = self.get_serial()
 
         import blyrpi
         rpi = blyrpi.Rpi()
         if rpi.collectmode:
-            steer = rpi.pin1
-            throttle = rpi.pin2
+            steer = rpi.steer
+            throttle = rpi.throttle
 
             # interfacing with blynk
             self.frame_results.append(serialize_image(frame))
             self.servo_results.append(steer)
             self.motorspeed_results.append(throttle)
+        else:
+            print("RPI not in collect mode\nExiting......")
 
         # If its not in manual mode then proceed
         # if serial_inputs:

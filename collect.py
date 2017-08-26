@@ -18,6 +18,9 @@ class Collect:
             self.output = Thread(target=self.main)
             self.output.start()
 
+
+
+
     def main(self):
         # Load image settings
         with open('settings.json') as d:
@@ -31,17 +34,22 @@ class Collect:
         print('Warming up...')
         time.sleep(5)
 
-        raw_input('Press any key to conitnue')
+        import blyrpi
+        _rpi = blyrpi.Rpi()
+
+        input('Press any key to conitnue')
         print('Recording data...')
         while True:
             try:
                 suironio.record_inputs()
+                if _rpi.exits == 1:
+                    break
             except KeyboardInterrupt:
                 break
 
         print('Saving file...')
         suironio.save_inputs()
-        self.stoppool()
+        # self.stoppool()
 
     def stoppool(self):
         # self.pool.close()
