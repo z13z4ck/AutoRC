@@ -8,6 +8,7 @@ import matplotlib.pyplot as plt
 from suiron.utils.functions import cnn_to_raw
 from suiron.utils.img_serializer import serialize_image
 from suiron.utils.file_finder import get_new_filename
+import gpiorpi
 
 class SuironIO:
     """
@@ -37,7 +38,9 @@ class SuironIO:
         # to prevent too much I/O
         self.frame_results = []
         self.servo_results = []
-        self.motorspeed_results = [] 
+        self.motorspeed_results = []
+
+        self.pi = gpiorpi.rpigpio()
     
     """ Functions below are used for inputs (recording data) """
     # Initialize settings before saving 
@@ -163,22 +166,27 @@ class SuironIO:
         elif (servo_out > 90):
             servo_out *= 1.15
 
-        self.ser.write('steer,' + str(servo_out) + '\n') 
+        # self.ser.write('steer,' + str(servo_out) + '\n')
+        self.pi.write_servo(servo_out)
         time.sleep(0.02)
 
+    # TODO add direct control to RPI using pigpio method
     # Sets the motor at a fixed speed
     def motor_write_fixed(self):    
-        self.ser.write('motor,80\n')
+        # self.ser.write('motor,80\n')
+        self.pi.write_throttle(80)
         time.sleep(0.02)
 
     # Stops motors
     def motor_stop(self):      
-        self.ser.write('motor,90\n')
+        # self.ser.write('motor,90\n')
+        self.pi.write_throttle(0)
         time.sleep(0.02)
 
     # Staightens servos
     def servo_straighten(self):
-        self.ser.write('steer,90')
+        # self.ser.write('steer,90')
+        self.pi.write_servo(150)
         time.sleep(0.02)
         
     def __del__(self):
