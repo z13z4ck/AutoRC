@@ -27,7 +27,7 @@ time.sleep(5)
 for i in range(50):
     suironio.get_frame()
 
-raw_input('Press any key to autonomous mode now...')
+input('Press any key to autonomous mode now...')
 suironio.motor_write_fixed()
 while True:
     try:
