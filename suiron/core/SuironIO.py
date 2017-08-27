@@ -170,7 +170,6 @@ class SuironIO:
         self.pi.write_servo(servo_out)
         time.sleep(0.02)
 
-    # TODO add direct control to RPI using pigpio method
     # Sets the motor at a fixed speed
     def motor_write_fixed(self):    
         # self.ser.write('motor,80\n')
