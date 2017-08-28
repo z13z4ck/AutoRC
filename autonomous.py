@@ -44,5 +44,6 @@ while True:
     except KeyboardInterrupt:
         suironio.motor_stop()
         suironio.servo_straighten()
+        break
 
 print('Exiting autonomous mode...')
